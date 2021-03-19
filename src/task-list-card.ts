@@ -178,7 +178,7 @@ export class TaskListCard extends LitElement {
                           </ha-icon>
                           <paper-input
                             no-label-float
-                            class="addBox column"
+                            class="addBox column" id="${task.id}"
                             placeholder=${this.hass!.localize(
                               "ui.panel.lovelace.cards.shopping-list.add_item"
                             )}
@@ -261,7 +261,7 @@ ${repeat(
 
   private _addItem(ev, task: Task): void {
     console.log("_addItem")
-    const newItem = this._newItem;
+    const newItem = this._newItem(task.id);
 
     if (newItem.value!.length > 0) {
       task.items.push({ name: newItem.value!, done: false, position: -1})
@@ -274,8 +274,8 @@ ${repeat(
     }
   }
 
-  private get _newItem(): PaperInputElement {
-    return this.shadowRoot!.querySelector(".addBox") as PaperInputElement;
+  private _newItem(id): PaperInputElement {
+    return this.shadowRoot!.getElementById(id) as PaperInputElement;
   }
 
   private clearItems(task: Task) {
